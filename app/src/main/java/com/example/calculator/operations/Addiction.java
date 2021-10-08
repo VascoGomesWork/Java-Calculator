@@ -10,6 +10,11 @@ public class Addiction extends OperationWith2Numbers {
         return this.getNumber1() + this.getNumber2();
     }
 
+    @Override
+    public double makeOperation(double num1, double num2) {
+        return num1 + num2;
+    }
+
     public String getOperator(){
         return "+";
     }
