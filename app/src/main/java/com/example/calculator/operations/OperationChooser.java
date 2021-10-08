@@ -15,27 +15,27 @@ public class OperationChooser {
         //Gets the operator chosen by the user
         operator = getOperationSign(operationString);
 
-        //TODO - Do not do with If's statements, use dynamic polymorphism somehow
+        //Choose the Operation to be made without having to make tons of If's statements
 
         String stringOperator = operator + "";
 
-        Operation2 additionTest = new AdditionTest();
-        Operation2 subtractionTest = new SubtractionTest();
-        List<Operation2> operationList = new ArrayList<>();
-        operationList.add(additionTest);
-        operationList.add(subtractionTest);
+        Operation addiction = new Addiction(Double.parseDouble(operationString.substring(0, operationString.indexOf(operator))), Double.parseDouble(operationString.substring(operationString.indexOf(operator) + 1)));
+        Operation subtraction = new Subtraction(Double.parseDouble(operationString.substring(0, operationString.indexOf(operator))), Double.parseDouble(operationString.substring(operationString.indexOf(operator) + 1)));
+        Operation multiply = new Multiply(Double.parseDouble(operationString.substring(0, operationString.indexOf(operator))), Double.parseDouble(operationString.substring(operationString.indexOf(operator) + 1)));
+        Operation division = new Division(Double.parseDouble(operationString.substring(0, operationString.indexOf(operator))), Double.parseDouble(operationString.substring(operationString.indexOf(operator) + 1)));
 
-        for (Operation2 operation2 : operationList) {
-            if(operation2.getOperator().equals(stringOperator)){
-                operationResult = operation2.makeOperation(Double.parseDouble(operationString.substring(0, operationString.indexOf(operator))), Double.parseDouble(operationString.substring(operationString.indexOf(operator) + 1)));
-                System.out.println("Operation Result = " + operation2.makeOperation(Double.parseDouble(operationString.substring(0, operationString.indexOf(operator))), Double.parseDouble(operationString.substring(operationString.indexOf(operator) + 1))));
+        List<Operation> operationList = new ArrayList<>();
+        operationList.add(addiction);
+        operationList.add(subtraction);
+        operationList.add(multiply);
+        operationList.add(division);
+
+        for (Operation operation : operationList) {
+            if(operation.getOperator().equals(stringOperator)){
+                operationResult = operation.makeOperation();
+                System.out.println("Operation Result = " + operation.makeOperation());
             }
         }
-
-                            /*if(operation.getOperator().equals(stringOperator)){
-                                operation.makeOperation();
-                            }*/
-
 
                             /*if(stringOperator.equals("+")){
                                 operation = new Addiction(Double.parseDouble(operationString.substring(0, operationString.indexOf(operator))), Double.parseDouble(operationString.substring(operationString.indexOf(operator) + 1)));
@@ -57,9 +57,6 @@ public class OperationChooser {
         System.out.println("Operation String = " + operationString);
         System.out.println("Operation String Number 1 = " + operationString.substring(0, operationString.indexOf(operator)));
         System.out.println("Operation String Number 2 = " + operationString.substring(operationString.indexOf(operator) + 1));
-
-        //System.out.println("Operation Result = " + operation.makeOperation());
-        //visorText += buttons.get(finalI).getText() + "" + operation.makeOperation();
         return operationResult;
     }
 

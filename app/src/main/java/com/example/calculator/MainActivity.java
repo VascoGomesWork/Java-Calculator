@@ -7,19 +7,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.example.calculator.operations.AdditionTest;
-import com.example.calculator.operations.Division;
-import com.example.calculator.operations.Multiply;
-import com.example.calculator.operations.Operation;
-import com.example.calculator.operations.Addiction;
-import com.example.calculator.operations.Operation2;
 import com.example.calculator.operations.OperationChooser;
-import com.example.calculator.operations.OperationTest;
-import com.example.calculator.operations.Subtraction;
-import com.example.calculator.operations.SubtractionTest;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity{
 
