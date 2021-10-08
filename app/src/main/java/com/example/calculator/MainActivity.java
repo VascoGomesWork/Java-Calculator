@@ -67,6 +67,7 @@ public class MainActivity extends AppCompatActivity{
                                 operation.makeOperation()
                             }*/
 
+
                             if(stringOperator.equals("+")){
                                 operation = new Addiction(Double.parseDouble(operationString.substring(0, operationString.indexOf(operator))), Double.parseDouble(operationString.substring(operationString.indexOf(operator) + 1)));
                                 System.out.println("Operation Result = " + operation.makeOperation());
