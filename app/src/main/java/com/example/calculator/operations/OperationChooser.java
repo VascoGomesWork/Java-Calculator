@@ -15,7 +15,7 @@ public class OperationChooser {
         //Gets the operator chosen by the user
         operator = getOperationSign(operationString);
 
-        //Choose the Operation to be made without having to make tons of If's statements
+        //Choose the Operation to be made without having to make tons of If's statement
 
         String stringOperator = operator + "";
 
@@ -60,14 +60,22 @@ public class OperationChooser {
         return operationResult;
     }
 
+        //TODO - Fix Operations with double values
+        /*
+            2.1 + 1 = 3 -> Faz -> Operador = +
+            1 + 2.1 = Erro -> Operador -> .
+         */
     private char getOperationSign(String operationString) {
         char localOperator  = ' ';
         //Gets the operation sign
         for (int k = 0; k < operationString.length(); k++) {
-            try {
-                num = Integer.parseInt(operationString.charAt(k) + "");
-            } catch (Exception e) {
-                localOperator = operationString.charAt(k);
+            //Checks if the char at the position k is a ".", cause if it is skips it so it dosen't throw any errors
+            if(operationString.charAt(k) != ('.')) {
+                try {
+                    num = Integer.parseInt(operationString.charAt(k) + "");
+                } catch (Exception e) {
+                    localOperator = operationString.charAt(k);
+                }
             }
         }
         System.out.println("Operator = " + localOperator);
