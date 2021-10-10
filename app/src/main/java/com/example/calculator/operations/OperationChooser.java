@@ -16,25 +16,34 @@ public class OperationChooser {
         operator = getOperationSign(operationString);
 
         //Choose the Operation to be made without having to make tons of If's statement
-
+        //TODO - Check if the numbers introduced are double or not
         String stringOperator = operator + "";
+        try {
+            Operation addiction = new Addiction(Double.parseDouble(operationString.substring(0, operationString.indexOf(operator))), Double.parseDouble(operationString.substring(operationString.indexOf(operator) + 1)));
+            Operation subtraction = new Subtraction(Double.parseDouble(operationString.substring(0, operationString.indexOf(operator))), Double.parseDouble(operationString.substring(operationString.indexOf(operator) + 1)));
+            Operation multiply = new Multiply(Double.parseDouble(operationString.substring(0, operationString.indexOf(operator))), Double.parseDouble(operationString.substring(operationString.indexOf(operator) + 1)));
+            Operation division = new Division(Double.parseDouble(operationString.substring(0, operationString.indexOf(operator))), Double.parseDouble(operationString.substring(operationString.indexOf(operator) + 1)));
 
-        Operation addiction = new Addiction(Double.parseDouble(operationString.substring(0, operationString.indexOf(operator))), Double.parseDouble(operationString.substring(operationString.indexOf(operator) + 1)));
-        Operation subtraction = new Subtraction(Double.parseDouble(operationString.substring(0, operationString.indexOf(operator))), Double.parseDouble(operationString.substring(operationString.indexOf(operator) + 1)));
-        Operation multiply = new Multiply(Double.parseDouble(operationString.substring(0, operationString.indexOf(operator))), Double.parseDouble(operationString.substring(operationString.indexOf(operator) + 1)));
-        Operation division = new Division(Double.parseDouble(operationString.substring(0, operationString.indexOf(operator))), Double.parseDouble(operationString.substring(operationString.indexOf(operator) + 1)));
+            List<Operation> operationList = new ArrayList<>();
+            operationList.add(addiction);
+            operationList.add(subtraction);
+            operationList.add(multiply);
+            operationList.add(division);
 
-        List<Operation> operationList = new ArrayList<>();
-        operationList.add(addiction);
-        operationList.add(subtraction);
-        operationList.add(multiply);
-        operationList.add(division);
-
-        for (Operation operation : operationList) {
-            if(operation.getOperator().equals(stringOperator)){
-                operationResult = operation.makeOperation();
-                System.out.println("Operation Result = " + operation.makeOperation());
+            for (Operation operation : operationList) {
+                if(operation.getOperator().equals(stringOperator)){
+                    operationResult = operation.makeOperation();
+                    System.out.println("Operation Result = " + operation.makeOperation());
+                }
             }
+
+            System.out.println("Operation String = " + operationString);
+            System.out.println("Operation String Number 1 = " + operationString.substring(0, operationString.indexOf(operator)));
+            System.out.println("Operation String Number 2 = " + operationString.substring(operationString.indexOf(operator) + 1));
+
+        } catch (Exception e) {
+            System.out.println("Introduce the 2 values");
+            operationResult = 0;
         }
 
                             /*if(stringOperator.equals("+")){
@@ -54,13 +63,9 @@ public class OperationChooser {
                                             System.out.println("Operation Result = " + operation.makeOperation());
                                             }*/
 
-        System.out.println("Operation String = " + operationString);
-        System.out.println("Operation String Number 1 = " + operationString.substring(0, operationString.indexOf(operator)));
-        System.out.println("Operation String Number 2 = " + operationString.substring(operationString.indexOf(operator) + 1));
         return operationResult;
     }
 
-        //TODO - Fix Operations with double values
         /*
             2.1 + 1 = 3 -> Faz -> Operador = +
             1 + 2.1 = Erro -> Operador -> .
