@@ -48,7 +48,15 @@ public class MainActivity extends AppCompatActivity{
                         if(buttons.get(finalI).getText().equals("=")){
 
                             //Get From Operation Chooser Class the result of the Operation through Polymorphism
-                            visorText += "=" + operationChooser.chooseOperation(operationString, j);
+                            //TODO - Checks if all numbers are Integer
+                            if(operationChooser.checkIfNumberIsInteger(operationString)) {
+                                //Converts the Result to Integer
+                                visorText += "=" + Integer.parseInt(operationChooser.chooseOperation(operationString, j) + "");
+                            }
+                            else{
+                                //The Result Stays as a Double
+                                visorText += "=" + operationChooser.chooseOperation(operationString, j);
+                            }
                         }
                         else {
                             visorText += buttons.get(finalI).getText();

@@ -41,6 +41,7 @@ public class OperationChooser {
             System.out.println("Operation String Number 1 = " + operationString.substring(0, operationString.indexOf(operator)));
             System.out.println("Operation String Number 2 = " + operationString.substring(operationString.indexOf(operator) + 1));
 
+
         } catch (Exception e) {
             System.out.println("Introduce the 2 values");
             operationResult = 0;
@@ -66,10 +67,14 @@ public class OperationChooser {
         return operationResult;
     }
 
-        /*
-            2.1 + 1 = 3 -> Faz -> Operador = +
-            1 + 2.1 = Erro -> Operador -> .
-         */
+
+    public boolean checkIfNumberIsInteger(String operationString){
+
+        //Checks how many operation signs there are and add 1 to the result, to know how many numbers are to use in for cycle
+
+        return false;
+    }
+
     private char getOperationSign(String operationString) {
         char localOperator  = ' ';
         //Gets the operation sign
