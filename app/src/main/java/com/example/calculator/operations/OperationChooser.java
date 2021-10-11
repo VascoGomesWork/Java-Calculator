@@ -17,6 +17,7 @@ public class OperationChooser {
 
         //Choose the Operation to be made without having to make tons of If's statement
         //TODO - Check if the numbers introduced are double or not
+        //Todo - Make Operation Preoritizing, meaby with a class that makes extend to multiplication and division
         String stringOperator = operator + "";
         try {
             Operation addiction = new Addiction(Double.parseDouble(operationString.substring(0, operationString.indexOf(operator))), Double.parseDouble(operationString.substring(operationString.indexOf(operator) + 1)));
