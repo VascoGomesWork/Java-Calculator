@@ -16,7 +16,6 @@ public class OperationChooser {
         operator = getOperationSign(operationString);
 
         //Choose the Operation to be made without having to make tons of If's statement
-        //TODO - Check if the numbers introduced are double or not
         //Todo - Make Operation Preoritizing, meaby with a class that makes extend to multiplication and division
         String stringOperator = operator + "";
         try {
@@ -87,9 +86,8 @@ public class OperationChooser {
     }
 
     public boolean checkIfNumberIsInteger(String operationString){
-
+        //Check if the numbers introduced are double or not
         operationString = checkIfStringContainsChar(operationString);
-        //Checks how many operation signs there are and add 1 to the result, to know how many numbers are to use in for cycle
         for (int i = 0; i < operationString.length(); i++) {
             for (Operation operation : operationList(operationString)) {
                 if (!(operationString.charAt(i) + "").equals(operation.getOperator())) {
