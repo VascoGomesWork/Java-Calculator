@@ -61,7 +61,7 @@ public class OperationChooser {
 
     public List<Operation> operationList(String operationString){
         //Checks if operationString has "=" sign and remove it if so
-        operationString = checkIfStringContainsChar(operationString);
+        operationString = checkIfStringContainsChar(operationString, "=");
 
         operator = getOperationSign(operationString);
         Operation addiction = new Addiction(Double.parseDouble(operationString.substring(0, operationString.indexOf(operator))), Double.parseDouble(operationString.substring(operationString.indexOf(operator) + 1)));
@@ -78,16 +78,16 @@ public class OperationChooser {
         return operationList;
     }
 
-    private String checkIfStringContainsChar(String operationString){
+    private String checkIfStringContainsChar(String operationString, String string){
         if(operationString.contains("=")){
-            operationString = operationString.substring(0, operationString.indexOf("="));
+            operationString = operationString.substring(0, operationString.indexOf(string));
         }
         return operationString;
     }
 
     public boolean checkIfNumberIsInteger(String operationString){
         //Check if the numbers introduced are double or not
-        operationString = checkIfStringContainsChar(operationString);
+        operationString = checkIfStringContainsChar(operationString, "=");
         for (int i = 0; i < operationString.length(); i++) {
             for (Operation operation : operationList(operationString)) {
                 if (!(operationString.charAt(i) + "").equals(operation.getOperator())) {
