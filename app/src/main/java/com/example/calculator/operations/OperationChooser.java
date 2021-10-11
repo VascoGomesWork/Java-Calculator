@@ -60,7 +60,12 @@ public class OperationChooser {
         return operationResult;
     }
 
-    public List operationList(String operationString){
+    public List<Operation> operationList(String operationString){
+        //Checks if operationString has "=" sign and remove it if so
+        if(operationString.contains("=")){
+            operationString = operationString.substring(0, operationString.indexOf("="));
+        }
+        operator = getOperationSign(operationString);
         Operation addiction = new Addiction(Double.parseDouble(operationString.substring(0, operationString.indexOf(operator))), Double.parseDouble(operationString.substring(operationString.indexOf(operator) + 1)));
         Operation subtraction = new Subtraction(Double.parseDouble(operationString.substring(0, operationString.indexOf(operator))), Double.parseDouble(operationString.substring(operationString.indexOf(operator) + 1)));
         Operation multiply = new Multiply(Double.parseDouble(operationString.substring(0, operationString.indexOf(operator))), Double.parseDouble(operationString.substring(operationString.indexOf(operator) + 1)));
@@ -79,11 +84,18 @@ public class OperationChooser {
 
         //Checks how many operation signs there are and add 1 to the result, to know how many numbers are to use in for cycle
         for (int i = 0; i < operationString.length(); i++) {
-            if(operationString.charAt(i) == '+'){
-
+            for (Operation operation : operationList(operationString)) {
+                if (!(operationString.charAt(i) + "").equals(operation.getOperator())) {
+                    try{
+                        Integer.parseInt(operationString.substring(0, operationString.charAt(operationString.indexOf(operation.getOperator()))));
+                        Integer.parseInt(operationString.substring(operationString.charAt(operationString.indexOf(operation.getOperator()) + 1)));
+                        return true;
+                    }catch (Exception e){
+                        System.out.println("Não são valores inteiros");
+                    }
+                }
             }
         }
-
         return false;
     }
 
@@ -91,7 +103,7 @@ public class OperationChooser {
         char localOperator  = ' ';
         //Gets the operation sign
         for (int k = 0; k < operationString.length(); k++) {
-            //Checks if the char at the position k is a ".", cause if it is skips it so it dosen't throw any errors
+            //Checks if the char at the position k is a ".", cause if it is skips it so it does not throw any errors
             if(operationString.charAt(k) != ('.')) {
                 try {
                     num = Integer.parseInt(operationString.charAt(k) + "");
