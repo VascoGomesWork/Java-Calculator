@@ -20,16 +20,8 @@ public class OperationChooser {
         //Todo - Make Operation Preoritizing, meaby with a class that makes extend to multiplication and division
         String stringOperator = operator + "";
         try {
-            Operation addiction = new Addiction(Double.parseDouble(operationString.substring(0, operationString.indexOf(operator))), Double.parseDouble(operationString.substring(operationString.indexOf(operator) + 1)));
-            Operation subtraction = new Subtraction(Double.parseDouble(operationString.substring(0, operationString.indexOf(operator))), Double.parseDouble(operationString.substring(operationString.indexOf(operator) + 1)));
-            Operation multiply = new Multiply(Double.parseDouble(operationString.substring(0, operationString.indexOf(operator))), Double.parseDouble(operationString.substring(operationString.indexOf(operator) + 1)));
-            Operation division = new Division(Double.parseDouble(operationString.substring(0, operationString.indexOf(operator))), Double.parseDouble(operationString.substring(operationString.indexOf(operator) + 1)));
 
-            List<Operation> operationList = new ArrayList<>();
-            operationList.add(addiction);
-            operationList.add(subtraction);
-            operationList.add(multiply);
-            operationList.add(division);
+            List<Operation> operationList = operationList(operationString);
 
             for (Operation operation : operationList) {
                 if(operation.getOperator().equals(stringOperator)){
@@ -68,10 +60,29 @@ public class OperationChooser {
         return operationResult;
     }
 
+    public List operationList(String operationString){
+        Operation addiction = new Addiction(Double.parseDouble(operationString.substring(0, operationString.indexOf(operator))), Double.parseDouble(operationString.substring(operationString.indexOf(operator) + 1)));
+        Operation subtraction = new Subtraction(Double.parseDouble(operationString.substring(0, operationString.indexOf(operator))), Double.parseDouble(operationString.substring(operationString.indexOf(operator) + 1)));
+        Operation multiply = new Multiply(Double.parseDouble(operationString.substring(0, operationString.indexOf(operator))), Double.parseDouble(operationString.substring(operationString.indexOf(operator) + 1)));
+        Operation division = new Division(Double.parseDouble(operationString.substring(0, operationString.indexOf(operator))), Double.parseDouble(operationString.substring(operationString.indexOf(operator) + 1)));
+
+        List<Operation> operationList = new ArrayList<>();
+        operationList.add(addiction);
+        operationList.add(subtraction);
+        operationList.add(multiply);
+        operationList.add(division);
+
+        return operationList;
+    }
 
     public boolean checkIfNumberIsInteger(String operationString){
 
         //Checks how many operation signs there are and add 1 to the result, to know how many numbers are to use in for cycle
+        for (int i = 0; i < operationString.length(); i++) {
+            if(operationString.charAt(i) == '+'){
+
+            }
+        }
 
         return false;
     }
