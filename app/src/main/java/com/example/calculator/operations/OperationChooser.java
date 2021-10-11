@@ -62,9 +62,8 @@ public class OperationChooser {
 
     public List<Operation> operationList(String operationString){
         //Checks if operationString has "=" sign and remove it if so
-        if(operationString.contains("=")){
-            operationString = operationString.substring(0, operationString.indexOf("="));
-        }
+        operationString = checkIfStringContainsChar(operationString);
+
         operator = getOperationSign(operationString);
         Operation addiction = new Addiction(Double.parseDouble(operationString.substring(0, operationString.indexOf(operator))), Double.parseDouble(operationString.substring(operationString.indexOf(operator) + 1)));
         Operation subtraction = new Subtraction(Double.parseDouble(operationString.substring(0, operationString.indexOf(operator))), Double.parseDouble(operationString.substring(operationString.indexOf(operator) + 1)));
@@ -80,15 +79,25 @@ public class OperationChooser {
         return operationList;
     }
 
+    private String checkIfStringContainsChar(String operationString){
+        if(operationString.contains("=")){
+            operationString = operationString.substring(0, operationString.indexOf("="));
+        }
+        return operationString;
+    }
+
     public boolean checkIfNumberIsInteger(String operationString){
 
+        operationString = checkIfStringContainsChar(operationString);
         //Checks how many operation signs there are and add 1 to the result, to know how many numbers are to use in for cycle
         for (int i = 0; i < operationString.length(); i++) {
             for (Operation operation : operationList(operationString)) {
                 if (!(operationString.charAt(i) + "").equals(operation.getOperator())) {
                     try{
-                        Integer.parseInt(operationString.substring(0, operationString.charAt(operationString.indexOf(operation.getOperator()))));
-                        Integer.parseInt(operationString.substring(operationString.charAt(operationString.indexOf(operation.getOperator()) + 1)));
+                        System.out.println("Value 1 = " + Integer.parseInt(operationString.substring(0, operationString.indexOf(operator))));
+                        System.out.println("Values 2 = " + Integer.parseInt(operationString.substring(operationString.indexOf(operator) + 1)));
+                        Integer.parseInt(operationString.substring(0, operationString.indexOf(operator)));
+                        Integer.parseInt(operationString.substring(operationString.indexOf(operator) + 1));
                         return true;
                     }catch (Exception e){
                         System.out.println("Não são valores inteiros");
