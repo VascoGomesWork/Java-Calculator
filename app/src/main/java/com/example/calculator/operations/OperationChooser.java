@@ -65,6 +65,7 @@ public class OperationChooser {
         List<Operation> operationList = new ArrayList<>();
 
         //TODO - Check how many numbers there are inside of stringOperation
+        //Goes to cath if the String has more than 2 numbers to separate the String and make the operation separatly
         try {
             operator = getOperationSign(operationString);
             Operation addiction = new Addiction(Double.parseDouble(operationString.substring(0, operationString.indexOf(operator))), Double.parseDouble(operationString.substring(operationString.indexOf(operator) + 1)));
@@ -83,7 +84,16 @@ public class OperationChooser {
             // Separates the String -> 2+2
             String operationSubstring = separateString(operationString);
             //4+3
-            //double subOperation = chooseOperation(operationSubstring);
+            //operationSubstring.length() + 1 -> gets the lenght of the substring to be able to do the operation
+            double subOperation = chooseOperation(operationSubstring, operationSubstring.length() + 1);
+            System.out.println("SUBOPERATION = " + subOperation);
+            //TODO - Check if subOperation is an Integer
+            /*if(checkIfNumberIsInteger(subOperation + "")){
+                subOperation = Math.round(subOperation);
+            }*/
+            String finalOperation = operationString.replace(operationString.substring(operationString.indexOf(operationString.charAt(0)), operationString.lastIndexOf(getOperationSign(operationString))), subOperation + "");
+            System.out.println("FINAL OPERATION = " + finalOperation);
+            chooseOperation(finalOperation, finalOperation.length() + 1);
         }
 
         return operationList;
