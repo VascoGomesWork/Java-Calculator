@@ -16,4 +16,9 @@ public class Multiply extends OperationWith2Numbers implements Operation {
     public String getOperator() {
         return "*";
     }
+
+    @Override
+    public int operationPrioritizing() {
+        return 1;
+    }
 }

@@ -14,4 +14,9 @@ public class Subtraction extends OperationWith2Numbers implements Operation {
     public String getOperator() {
         return "-";
     }
+
+    @Override
+    public int operationPrioritizing() {
+        return 0;
+    }
 }

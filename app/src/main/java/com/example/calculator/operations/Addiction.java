@@ -13,4 +13,9 @@ public class Addiction extends OperationWith2Numbers {
     public String getOperator(){
         return "+";
     }
+
+    @Override
+    public int operationPrioritizing() {
+        return 0;
+    }
 }

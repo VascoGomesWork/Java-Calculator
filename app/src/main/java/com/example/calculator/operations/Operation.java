@@ -5,4 +5,6 @@ public interface Operation {
     double makeOperation();
 
     String getOperator();
+
+    int operationPrioritizing();
 }

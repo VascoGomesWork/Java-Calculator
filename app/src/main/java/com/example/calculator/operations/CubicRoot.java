@@ -15,4 +15,9 @@ public class CubicRoot extends OperationWith1Number implements Operation {
     public String getOperator() {
         return null;
     }
+
+    @Override
+    public int operationPrioritizing() {
+        return 0;
+    }
 }
