@@ -62,20 +62,35 @@ public class OperationChooser {
     public List<Operation> operationList(String operationString){
         //Checks if operationString has "=" sign and remove it if so
         operationString = checkIfStringContainsChar(operationString, "=");
-
-        operator = getOperationSign(operationString);
-        Operation addiction = new Addiction(Double.parseDouble(operationString.substring(0, operationString.indexOf(operator))), Double.parseDouble(operationString.substring(operationString.indexOf(operator) + 1)));
-        Operation subtraction = new Subtraction(Double.parseDouble(operationString.substring(0, operationString.indexOf(operator))), Double.parseDouble(operationString.substring(operationString.indexOf(operator) + 1)));
-        Operation multiply = new Multiply(Double.parseDouble(operationString.substring(0, operationString.indexOf(operator))), Double.parseDouble(operationString.substring(operationString.indexOf(operator) + 1)));
-        Operation division = new Division(Double.parseDouble(operationString.substring(0, operationString.indexOf(operator))), Double.parseDouble(operationString.substring(operationString.indexOf(operator) + 1)));
-
         List<Operation> operationList = new ArrayList<>();
-        operationList.add(addiction);
-        operationList.add(subtraction);
-        operationList.add(multiply);
-        operationList.add(division);
+
+        //TODO - Check how many numbers there are inside of stringOperation
+        try {
+            operator = getOperationSign(operationString);
+            Operation addiction = new Addiction(Double.parseDouble(operationString.substring(0, operationString.indexOf(operator))), Double.parseDouble(operationString.substring(operationString.indexOf(operator) + 1)));
+            Operation subtraction = new Subtraction(Double.parseDouble(operationString.substring(0, operationString.indexOf(operator))), Double.parseDouble(operationString.substring(operationString.indexOf(operator) + 1)));
+            Operation multiply = new Multiply(Double.parseDouble(operationString.substring(0, operationString.indexOf(operator))), Double.parseDouble(operationString.substring(operationString.indexOf(operator) + 1)));
+            Operation division = new Division(Double.parseDouble(operationString.substring(0, operationString.indexOf(operator))), Double.parseDouble(operationString.substring(operationString.indexOf(operator) + 1)));
+
+            operationList.add(addiction);
+            operationList.add(subtraction);
+            operationList.add(multiply);
+            operationList.add(division);
+
+        } catch (Exception e){
+            //2+2+3
+            System.out.println("Tem mais de 2 números");
+            // Separates the String -> 2+2
+            String operationSubstring = separateString(operationString);
+            //4+3
+            //double subOperation = chooseOperation(operationSubstring);
+        }
 
         return operationList;
+    }
+
+    private String separateString(String operationString) {
+        return operationString.substring(0, operationString.lastIndexOf(getOperationSign(operationString)));
     }
 
     private String checkIfStringContainsChar(String operationString, String string){
