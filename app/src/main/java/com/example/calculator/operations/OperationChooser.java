@@ -25,15 +25,8 @@ public class OperationChooser {
             for (Operation operation : operationList) {
                 if(operation.getOperator().equals(stringOperator)){
                     operationResult = operation.makeOperation();
-                    System.out.println("Operation Result = " + operation.makeOperation());
                 }
             }
-
-            System.out.println("Operation String = " + operationString);
-            System.out.println("Operation String Number 1 = " + operationString.substring(0, operationString.indexOf(operator)));
-            System.out.println("Operation String Number 2 = " + operationString.substring(operationString.indexOf(operator) + 1));
-
-
         } catch (Exception e) {
             System.out.println("Introduce the 2 values");
             operationResult = 0;
@@ -83,15 +76,14 @@ public class OperationChooser {
             // Separates the String -> 2+2
             String operationSubstring = separateString(operationString);
             //4+3
-            //operationSubstring.length() + 1 -> gets the lenght of the substring to be able to do the operation
+            //operationSubstring.length() + 1 -> Gets the length of the substring to be able to do the operation
+
             double subOperation = chooseOperation(operationSubstring, operationSubstring.length() + 1);
+            String subOperationString = chooseOperation(operationSubstring, operationSubstring.length() + 1) + "";
+
             System.out.println("SUBOPERATION = " + subOperation);
-            String finalOperation = operationString.replace(operationString.substring(operationString.indexOf(operationString.charAt(0)), operationString.lastIndexOf(getOperationSign(operationString))), subOperation + "");
+            String finalOperation = operationString.replace(operationString.substring(operationString.indexOf(operationString.charAt(0)), operationString.lastIndexOf(getOperationSign(operationString))), subOperationString.contains(".0") ? Math.round(subOperation) + "" : subOperation/*subOperation*/ + "");
             System.out.println("FINAL OPERATION = " + finalOperation);
-            //TODO - Make the checking if subOperation is an Integer for more than 2 values
-            if(checkIfNumberIsInteger(finalOperation)){
-                finalOperation = Math.round(subOperation) + "";
-            }
             chooseOperation(finalOperation, finalOperation.length() + 1);
         }
 
@@ -103,7 +95,7 @@ public class OperationChooser {
     }
 
     private String checkIfStringContainsChar(String operationString, String string){
-        if(operationString.contains("=")){
+        if(operationString.contains(string)){
             operationString = operationString.substring(0, operationString.indexOf(string));
         }
         return operationString;
@@ -115,9 +107,10 @@ public class OperationChooser {
         for (int i = 0; i < operationString.length(); i++) {
             for (Operation operation : operationList(operationString)) {
                 if (!(operationString.charAt(i) + "").equals(operation.getOperator())) {
+                    System.out.println(operationString);
                     try{
-                        System.out.println("Value 1 = " + Integer.parseInt(operationString.substring(0, operationString.indexOf(operator))));
-                        System.out.println("Values 2 = " + Integer.parseInt(operationString.substring(operationString.indexOf(operator) + 1)));
+                        /*System.out.println("Value 1 = " + Integer.parseInt(operationString.substring(0, operationString.indexOf(operator))));
+                        System.out.println("Values 2 = " + Integer.parseInt(operationString.substring(operationString.indexOf(operator) + 1)));*/
                         Integer.parseInt(operationString.substring(0, operationString.indexOf(operator)));
                         Integer.parseInt(operationString.substring(operationString.indexOf(operator) + 1));
                         return true;
@@ -143,7 +136,6 @@ public class OperationChooser {
                 }
             }
         }
-        System.out.println("Operator = " + localOperator);
         return localOperator;
     }
 }
