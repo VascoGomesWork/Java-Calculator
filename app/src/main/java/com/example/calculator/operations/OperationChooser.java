@@ -9,8 +9,10 @@ public class OperationChooser {
     double operationResult = 0;
     int num = 0;
 
+
     public double chooseOperation(String operationString, int j){
-        //Gets the substring without the "="
+        //Gets the substring without the "=" sign
+        System.out.println("Operation String Choose Operation = " + operationString);
         operationString = operationString.substring(0, j - 1);
         //Gets the operator chosen by the user
         operator = getOperationSign(operationString);
@@ -20,15 +22,17 @@ public class OperationChooser {
         String stringOperator = operator + "";
         try {
 
+            //Gets the Operation List with all things configured
             List<Operation> operationList = operationList(operationString);
 
             for (Operation operation : operationList) {
                 if(operation.getOperator().equals(stringOperator)){
                     operationResult = operation.makeOperation();
+                    break;
                 }
             }
         } catch (Exception e) {
-            System.out.println("Introduce the 2 values");
+            //System.out.println("Introduce the 2 values");
             operationResult = 0;
         }
 
@@ -54,32 +58,34 @@ public class OperationChooser {
 
     public List<Operation> operationList(String operationString){
         //Checks if operationString has "=" sign and remove it if so
-        operationString = checkIfStringContainsChar(operationString, "=");
+        operationString = substringUntilChar(operationString, "=");
         List<Operation> operationList = new ArrayList<>();
 
         //Goes to cath if the String has more than 2 numbers to separate the String and make the operation separately
         try {
-            operator = getOperationSign(operationString);
-            Operation addiction = new Addiction(Double.parseDouble(operationString.substring(0, operationString.indexOf(operator))), Double.parseDouble(operationString.substring(operationString.indexOf(operator) + 1)));
-            Operation subtraction = new Subtraction(Double.parseDouble(operationString.substring(0, operationString.indexOf(operator))), Double.parseDouble(operationString.substring(operationString.indexOf(operator) + 1)));
-            Operation multiply = new Multiply(Double.parseDouble(operationString.substring(0, operationString.indexOf(operator))), Double.parseDouble(operationString.substring(operationString.indexOf(operator) + 1)));
-            Operation division = new Division(Double.parseDouble(operationString.substring(0, operationString.indexOf(operator))), Double.parseDouble(operationString.substring(operationString.indexOf(operator) + 1)));
-
-            operationList.add(addiction);
-            operationList.add(subtraction);
-            operationList.add(multiply);
-            operationList.add(division);
+            fufillList(operationString, operationList);
 
         } catch (Exception e){
             //2+2+3
             System.out.println("Tem mais de 2 números");
-            // Separates the String -> 2+2
+            System.out.println("Operation String After Catch = " + operationString);
+
+            //Checks if the String has a prioritizing operation
+            //It is only worth to do this in an operation that contains more than 2 numbers
+            //Because doing 2*4 = 8 and doing 2+2*4 = 2*4+2 = 8+2 = 10 it's different
+            //What Im' going to do is to put the prioritizing operation in the beginning of the operationString
+            //TODO - Make this if with polymorphism
+            //TODO Fix This, in String 2*3+1, 3+1 is the prioritized operation
+            //TODO - Extrct to method solvePrioritizingOperations()
+            solvePrioritizingOperations(operationString, operationList);
+
+            //Separates the String -> 2+2
             String operationSubstring = separateString(operationString);
             //4+3
             //operationSubstring.length() + 1 -> Gets the length of the substring to be able to do the operation
 
             double subOperation = chooseOperation(operationSubstring, operationSubstring.length() + 1);
-            String subOperationString = chooseOperation(operationSubstring, operationSubstring.length() + 1) + "";
+            String subOperationString = subOperation + "";
 
             System.out.println("SUBOPERATION = " + subOperation);
             String finalOperation = operationString.replace(operationString.substring(operationString.indexOf(operationString.charAt(0)), operationString.lastIndexOf(getOperationSign(operationString))), subOperationString.contains(".0") ? Math.round(subOperation) + "" : subOperation/*subOperation*/ + "");
@@ -90,11 +96,50 @@ public class OperationChooser {
         return operationList;
     }
 
+    private String solvePrioritizingOperations(String operationString, List<Operation> operationList) {
+
+        for (Operation operation : operationList) {
+            System.out.println("Operation = " + operation);
+            System.out.println(operation.operationPrioritizing());
+            if(operationString.contains(operation.operationPrioritizing() + "")){
+                System.out.println("TRUE");
+                /*String prioritizingOperationSubstring = operationString.substring(operationString.indexOf(operator) - 1, operationString.indexOf(operator) + 2);
+                System.out.println("Prioritizing Operation = " + prioritizingOperationSubstring);
+                double prioritizeOperation = chooseOperation(prioritizingOperationSubstring, prioritizingOperationSubstring.length() + 1);
+                operationString = operationString.replace(prioritizingOperationSubstring, prioritizeOperation + "");
+                System.out.println("Operation String Modified = " + operationString);
+                //For this not giving error in operations like 1+2*3/2, it has to be aplied an if
+                //Adding 0 does not change the result of the operation, but it dosen't crash the program in the states ahead
+                operationString = operationString + "+0";*/
+                break;
+            }
+        }
+
+        return "";
+    }
+
+    private List<Operation> fufillList(String operationString, List<Operation> operationList) {
+
+        operator = getOperationSign(operationString);
+        Operation addiction = new Addiction(Double.parseDouble(operationString.substring(0, operationString.indexOf(operator))), Double.parseDouble(operationString.substring(operationString.indexOf(operator) + 1)));
+        Operation subtraction = new Subtraction(Double.parseDouble(operationString.substring(0, operationString.indexOf(operator))), Double.parseDouble(operationString.substring(operationString.indexOf(operator) + 1)));
+        Operation multiply = new Multiply(Double.parseDouble(operationString.substring(0, operationString.indexOf(operator))), Double.parseDouble(operationString.substring(operationString.indexOf(operator) + 1)));
+        Operation division = new Division(Double.parseDouble(operationString.substring(0, operationString.indexOf(operator))), Double.parseDouble(operationString.substring(operationString.indexOf(operator) + 1)));
+
+        operationList.add(addiction);
+        operationList.add(subtraction);
+        operationList.add(multiply);
+        operationList.add(division);
+
+        return operationList;
+    }
+
     private String separateString(String operationString) {
+
         return operationString.substring(0, operationString.lastIndexOf(getOperationSign(operationString)));
     }
 
-    private String checkIfStringContainsChar(String operationString, String string){
+    private String substringUntilChar(String operationString, String string){
         if(operationString.contains(string)){
             operationString = operationString.substring(0, operationString.indexOf(string));
         }
@@ -103,7 +148,7 @@ public class OperationChooser {
 
     public boolean checkIfNumberIsInteger(String operationString){
         //Check if the numbers introduced are double or not
-        operationString = checkIfStringContainsChar(operationString, "=");
+        operationString = substringUntilChar(operationString, "=");
         for (int i = 0; i < operationString.length(); i++) {
             for (Operation operation : operationList(operationString)) {
                 if (!(operationString.charAt(i) + "").equals(operation.getOperator())) {
