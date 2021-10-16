@@ -7,4 +7,5 @@ public interface Operation {
     String getOperator();
 
     int operationPrioritizing();
+
 }

@@ -10,6 +10,12 @@ public class OperationChooser {
     int num = 0;
 
 
+    /**
+     * @Resume :
+     * @param operationString
+     * @param j
+     * @return
+     */
     public double chooseOperation(String operationString, int j){
         //Gets the substring without the "=" sign
         System.out.println("Operation String Choose Operation = " + operationString);
@@ -56,14 +62,19 @@ public class OperationChooser {
         return operationResult;
     }
 
+    /**
+     * @Resume :
+     * @param operationString
+     * @return
+     */
     public List<Operation> operationList(String operationString){
         //Checks if operationString has "=" sign and remove it if so
         operationString = substringUntilChar(operationString, "=");
         List<Operation> operationList = new ArrayList<>();
 
-        //Goes to cath if the String has more than 2 numbers to separate the String and make the operation separately
+        //Goes to catch if the String has more than 2 numbers to separate the String and make the operation separately
         try {
-            fufillList(operationString, operationList);
+            operationList = fufillList(operationString);
 
         } catch (Exception e){
             //2+2+3
@@ -73,11 +84,9 @@ public class OperationChooser {
             //Checks if the String has a prioritizing operation
             //It is only worth to do this in an operation that contains more than 2 numbers
             //Because doing 2*4 = 8 and doing 2+2*4 = 2*4+2 = 8+2 = 10 it's different
-            //What Im' going to do is to put the prioritizing operation in the beginning of the operationString
-            //TODO - Make this if with polymorphism
-            //TODO Fix This, in String 2*3+1, 3+1 is the prioritized operation
-            //TODO - Extrct to method solvePrioritizingOperations()
-            solvePrioritizingOperations(operationString, operationList);
+            //What Im' going to do is to solve the prioritizing operation first and then replace it in operationString
+            System.out.println("Operation List Test = " + operationList);
+            operationString = solvePrioritizingOperations(operationString, operationList);
 
             //Separates the String -> 2+2
             String operationSubstring = separateString(operationString);
@@ -96,29 +105,59 @@ public class OperationChooser {
         return operationList;
     }
 
+    /**
+     * @Resume : Function that solves the prioritizing operation
+     * @param operationString
+     * @param operationList
+     * @return : String operationString
+     */
     private String solvePrioritizingOperations(String operationString, List<Operation> operationList) {
+        //TODO - Fix Operation 1+2*3/2 not working -> more than 1 prioritizing operation
+        //Gets a List with the prioritizing operations
+        List<String> prioritizingOperators = getPrioritizingOperators();
 
-        for (Operation operation : operationList) {
-            System.out.println("Operation = " + operation);
-            System.out.println(operation.operationPrioritizing());
-            if(operationString.contains(operation.operationPrioritizing() + "")){
-                System.out.println("TRUE");
-                /*String prioritizingOperationSubstring = operationString.substring(operationString.indexOf(operator) - 1, operationString.indexOf(operator) + 2);
+        for (String prioritizingOperation : prioritizingOperators){
+            if(operationString.contains(prioritizingOperation)){
+                //Gets the numbers that are included on the prioritized operation
+                String prioritizingOperationSubstring = operationString.substring(operationString.indexOf(prioritizingOperation) - 1, operationString.indexOf(prioritizingOperation) + 2);
                 System.out.println("Prioritizing Operation = " + prioritizingOperationSubstring);
+                //Makes the prioritizing operation
                 double prioritizeOperation = chooseOperation(prioritizingOperationSubstring, prioritizingOperationSubstring.length() + 1);
                 operationString = operationString.replace(prioritizingOperationSubstring, prioritizeOperation + "");
                 System.out.println("Operation String Modified = " + operationString);
                 //For this not giving error in operations like 1+2*3/2, it has to be aplied an if
                 //Adding 0 does not change the result of the operation, but it dosen't crash the program in the states ahead
-                operationString = operationString + "+0";*/
-                break;
-            }
+                operationString = operationString + "+0";
+                //break;
+                }
         }
 
-        return "";
+        return operationString;
     }
 
-    private List<Operation> fufillList(String operationString, List<Operation> operationList) {
+    /**
+     * @Resume : Function that gets a List with the prioritizing operations
+     * @return : List prioritizingOperationList
+     */
+    private List<String> getPrioritizingOperators() {
+        List<Operation> operationList = fufillList("0+0");
+        List<String> prioritizingOperationList = new ArrayList<>();
+        for (Operation operation : operationList) {
+            if (operation.operationPrioritizing() == 1) {
+                prioritizingOperationList.add(operation.getOperator());
+            }
+        }
+        System.out.println("Prioritizing List = " + prioritizingOperationList);
+        return prioritizingOperationList;
+    }
+
+    /**
+     * @Resume : Function that fufills a List of operations
+     * @param operationString
+     * @return : operationList
+     */
+    private List<Operation> fufillList(String operationString) {
+        List<Operation> operationList = new ArrayList<>();
 
         operator = getOperationSign(operationString);
         Operation addiction = new Addiction(Double.parseDouble(operationString.substring(0, operationString.indexOf(operator))), Double.parseDouble(operationString.substring(operationString.indexOf(operator) + 1)));
@@ -134,11 +173,22 @@ public class OperationChooser {
         return operationList;
     }
 
+    /**
+     * @Resume : Function that separates a operationString -> 1+2+3 to 1+2
+     * @param operationString
+     * @return : A substring of the original operationString
+     */
     private String separateString(String operationString) {
 
         return operationString.substring(0, operationString.lastIndexOf(getOperationSign(operationString)));
     }
 
+    /**
+     * @Resume :
+     * @param operationString
+     * @param string
+     * @return
+     */
     private String substringUntilChar(String operationString, String string){
         if(operationString.contains(string)){
             operationString = operationString.substring(0, operationString.indexOf(string));
@@ -146,6 +196,11 @@ public class OperationChooser {
         return operationString;
     }
 
+    /**
+     * @Resune : Function that checks if a number is Integer
+     * @param operationString
+     * @return True if it is an Integer, and False if Not
+     */
     public boolean checkIfNumberIsInteger(String operationString){
         //Check if the numbers introduced are double or not
         operationString = substringUntilChar(operationString, "=");
@@ -168,6 +223,11 @@ public class OperationChooser {
         return false;
     }
 
+    /**
+     * @Resume : Function that gets the operation sign of the operationString
+     * @param operationString
+     * @return : char operator
+     */
     private char getOperationSign(String operationString) {
         char localOperator  = ' ';
         //Gets the operation sign

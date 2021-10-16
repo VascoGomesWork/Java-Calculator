@@ -11,6 +11,7 @@ public abstract class OperationWith2Numbers implements Operation {
         this.number2 = inputedNumber2;
     }
 
+
     public double getNumber1() {
         return number1;
     }
