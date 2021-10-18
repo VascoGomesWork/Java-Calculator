@@ -26,7 +26,6 @@ public class OperationChooser {
         operator = getOperationSign(operationString);
 
         //Choose the Operation to be made without having to make tons of If's statement
-        //Todo - Make Operation Preoritizing, meaby with a class that makes extend to multiplication and division
         String stringOperator = operator + "";
         try {
 
@@ -136,7 +135,6 @@ public class OperationChooser {
                     System.out.println("Operation String inside if = " + operationString);
                 }
                 operationString = operationString + "+0";
-                //break;
                 }
         }
 
