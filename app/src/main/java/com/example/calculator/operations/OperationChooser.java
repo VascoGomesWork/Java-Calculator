@@ -113,14 +113,12 @@ public class OperationChooser {
      * @return : String operationString
      */
     private String solvePrioritizingOperations(String operationString) {
-        //TODO - Fix Operation 1+2*3/2 not working -> more than 1 prioritizing operation
         //Gets a List with the prioritizing operations
         List<String> prioritizingOperators = getPrioritizingOperators();
 
         for (String prioritizingOperation : prioritizingOperators){
             if(operationString.contains(prioritizingOperation)){
                 //Gets the numbers that are included on the prioritized operation
-                //TODO - Problem on this line
                 String prioritizingOperationSubstring = "";
                 try {
                     prioritizingOperationSubstring = operationString.substring(operationString.indexOf(operator) + 1, operationString.indexOf(prioritizingOperation) + 2);
