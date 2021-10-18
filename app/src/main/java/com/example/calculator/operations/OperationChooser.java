@@ -3,6 +3,7 @@ package com.example.calculator.operations;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 public class OperationChooser {
 
@@ -120,8 +121,11 @@ public class OperationChooser {
             if(operationString.contains(prioritizingOperation)){
                 //Gets the numbers that are included on the prioritized operation
                 //TODO - Problem on this line
-                //String prioritizingOperationSubstring = operationString.substring(operationString.indexOf(operator) + 1, operationString.indexOf(prioritizingOperation) + 2);
-                String prioritizingOperationSubstring = operationString.substring(operationString.indexOf(prioritizingOperation) - 1, operationString.indexOf(prioritizingOperation) + 2);
+                String prioritizingOperationSubstring = "";
+                try {
+                    prioritizingOperationSubstring = operationString.substring(operationString.indexOf(operator) + 1, operationString.indexOf(prioritizingOperation) + 2);
+                } catch (Exception e) {
+                    prioritizingOperationSubstring = operationString.substring(operationString.indexOf(prioritizingOperation) - 1, operationString.indexOf(prioritizingOperation) + 2); }
                 System.out.println("Prioritizing Operation = " + prioritizingOperationSubstring);
                 //Makes the prioritizing operation
                 double prioritizeOperation = chooseOperation(prioritizingOperationSubstring, prioritizingOperationSubstring.length() + 1);
@@ -202,32 +206,6 @@ public class OperationChooser {
         return operationString;
     }
 
-    /**
-     * @Resune : Function that checks if a number is Integer
-     * @param operationString
-     * @return True if it is an Integer, and False if Not
-     */
-    public boolean checkIfNumberIsInteger(String operationString){
-        //Check if the numbers introduced are double or not
-        operationString = substringUntilChar(operationString, "=");
-        for (int i = 0; i < operationString.length(); i++) {
-            for (Operation operation : operationList(operationString)) {
-                if (!(operationString.charAt(i) + "").equals(operation.getOperator())) {
-                    System.out.println(operationString);
-                    try{
-                        /*System.out.println("Value 1 = " + Integer.parseInt(operationString.substring(0, operationString.indexOf(operator))));
-                        System.out.println("Values 2 = " + Integer.parseInt(operationString.substring(operationString.indexOf(operator) + 1)));*/
-                        Integer.parseInt(operationString.substring(0, operationString.indexOf(operator)));
-                        Integer.parseInt(operationString.substring(operationString.indexOf(operator) + 1));
-                        return true;
-                    }catch (Exception e){
-                        System.out.println("Não são valores inteiros");
-                    }
-                }
-            }
-        }
-        return false;
-    }
 
     /**
      * @Resume : Function that gets the operation sign of the operationString
@@ -250,6 +228,11 @@ public class OperationChooser {
         return localOperator;
     }
 
+    /**
+     * @Resume : Function that checks if the values after the "." are all 0, adding to the variable num
+     * @param resultOperation
+     * @return true in case of the num == 0, false instead
+     */
     public boolean checkFinalResultIsInteger(String resultOperation) {
         System.out.println("Operation String Function Test = " + resultOperation);
             char[] decimalPartOperation = resultOperation.substring(resultOperation.indexOf(".") + 1).toCharArray();

@@ -49,7 +49,6 @@ public class MainActivity extends AppCompatActivity{
 
                             //Get From Operation Chooser Class the result of the Operation through Polymorphism
                             //Checks if all numbers are Integer
-                            System.out.println("Teste = " + operationString);
                             String resultOperation = operationChooser.chooseOperation(operationString, j) + "";
                             if(operationChooser.checkFinalResultIsInteger(resultOperation)) {
                                 //Converts the Result to Integer
