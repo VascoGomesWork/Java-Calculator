@@ -50,13 +50,14 @@ public class MainActivity extends AppCompatActivity{
                             //Get From Operation Chooser Class the result of the Operation through Polymorphism
                             //Checks if all numbers are Integer
                             System.out.println("Teste = " + operationString);
-                            if(operationChooser.checkIfNumberIsInteger(operationString) || !operationString.contains(".")) {
+                            String resultOperation = operationChooser.chooseOperation(operationString, j) + "";
+                            if(operationChooser.checkFinalResultIsInteger(resultOperation)) {
                                 //Converts the Result to Integer
-                                visorText += "=" + Math.round(operationChooser.chooseOperation(operationString, j));
+                                visorText += "=" + Math.round(Double.parseDouble(resultOperation));
                             }
                             else{
                                 //The Result Stays as a Double
-                                visorText += "=" + operationChooser.chooseOperation(operationString, j);
+                                visorText += "=" + resultOperation;
                             }
                         }
                         else {

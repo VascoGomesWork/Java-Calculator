@@ -1,5 +1,6 @@
 package com.example.calculator.operations;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -85,8 +86,7 @@ public class OperationChooser {
             //It is only worth to do this in an operation that contains more than 2 numbers
             //Because doing 2*4 = 8 and doing 2+2*4 = 2*4+2 = 8+2 = 10 it's different
             //What Im' going to do is to solve the prioritizing operation first and then replace it in operationString
-            System.out.println("Operation List Test = " + operationList);
-            operationString = solvePrioritizingOperations(operationString, operationList);
+            operationString = solvePrioritizingOperations(operationString);
 
             //Separates the String -> 2+2
             String operationSubstring = separateString(operationString);
@@ -108,10 +108,10 @@ public class OperationChooser {
     /**
      * @Resume : Function that solves the prioritizing operation
      * @param operationString
-     * @param operationList
+
      * @return : String operationString
      */
-    private String solvePrioritizingOperations(String operationString, List<Operation> operationList) {
+    private String solvePrioritizingOperations(String operationString) {
         //TODO - Fix Operation 1+2*3/2 not working -> more than 1 prioritizing operation
         //Gets a List with the prioritizing operations
         List<String> prioritizingOperators = getPrioritizingOperators();
@@ -119,6 +119,8 @@ public class OperationChooser {
         for (String prioritizingOperation : prioritizingOperators){
             if(operationString.contains(prioritizingOperation)){
                 //Gets the numbers that are included on the prioritized operation
+                //TODO - Problem on this line
+                //String prioritizingOperationSubstring = operationString.substring(operationString.indexOf(operator) + 1, operationString.indexOf(prioritizingOperation) + 2);
                 String prioritizingOperationSubstring = operationString.substring(operationString.indexOf(prioritizingOperation) - 1, operationString.indexOf(prioritizingOperation) + 2);
                 System.out.println("Prioritizing Operation = " + prioritizingOperationSubstring);
                 //Makes the prioritizing operation
@@ -127,6 +129,10 @@ public class OperationChooser {
                 System.out.println("Operation String Modified = " + operationString);
                 //For this not giving error in operations like 1+2*3/2, it has to be aplied an if
                 //Adding 0 does not change the result of the operation, but it dosen't crash the program in the states ahead
+                if(operationString.contains(prioritizingOperation)){
+                    operationString = solvePrioritizingOperations(operationString);
+                    System.out.println("Operation String inside if = " + operationString);
+                }
                 operationString = operationString + "+0";
                 //break;
                 }
@@ -242,5 +248,20 @@ public class OperationChooser {
             }
         }
         return localOperator;
+    }
+
+    public boolean checkFinalResultIsInteger(String resultOperation) {
+        System.out.println("Operation String Function Test = " + resultOperation);
+            char[] decimalPartOperation = resultOperation.substring(resultOperation.indexOf(".") + 1).toCharArray();
+            int num = 0;
+            for (char decimal : decimalPartOperation) {
+                System.out.println("Decimal = " + decimal);
+                num += Integer.parseInt(decimal + "");
+            }
+            System.out.println("Num = " + num);
+            if(num == 0){
+                return true;
+            }
+            return false;
     }
 }
