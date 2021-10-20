@@ -108,7 +108,6 @@ public class OperationChooser {
     /**
      * @Resume : Function that solves the prioritizing operation
      * @param operationString
-
      * @return : String operationString
      */
     private String solvePrioritizingOperations(String operationString) {
@@ -119,10 +118,13 @@ public class OperationChooser {
             if(operationString.contains(prioritizingOperation)){
                 //Gets the numbers that are included on the prioritized operation
                 String prioritizingOperationSubstring = "";
+                //TODO - Solve Operation with Prioritizing in operation 0.85*2+1.19 the pririoritizing operation is 5*2 and that is wrong
+                //TODO - 1.19+2*0.85 looping
                 try {
                     prioritizingOperationSubstring = operationString.substring(operationString.indexOf(operator) + 1, operationString.indexOf(prioritizingOperation) + 2);
                 } catch (Exception e) {
-                    prioritizingOperationSubstring = operationString.substring(operationString.indexOf(prioritizingOperation) - 1, operationString.indexOf(prioritizingOperation) + 2); }
+                    prioritizingOperationSubstring = operationString.substring(operationString.indexOf(prioritizingOperation) - 1, operationString.indexOf(prioritizingOperation) + 2);
+                }
                 System.out.println("Prioritizing Operation = " + prioritizingOperationSubstring);
                 //Makes the prioritizing operation
                 double prioritizeOperation = chooseOperation(prioritizingOperationSubstring, prioritizingOperationSubstring.length() + 1);

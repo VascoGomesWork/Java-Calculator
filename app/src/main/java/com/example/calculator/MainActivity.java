@@ -80,6 +80,7 @@ public class MainActivity extends AppCompatActivity{
 
     }
 
+    //TODO - Insert Linear Layout
     private void addButtonsToList() {
         //Adds the buttons to the arrayList
         buttons.add(findViewById(R.id.btn1));
@@ -103,4 +104,7 @@ public class MainActivity extends AppCompatActivity{
         buttons.add(findViewById(R.id.clear));
     }
 
+    public void squareRootOnClick(View view) {
+        System.out.println("Square Root");
+    }
 }
