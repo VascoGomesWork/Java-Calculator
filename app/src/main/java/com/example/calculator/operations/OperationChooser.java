@@ -118,19 +118,38 @@ public class OperationChooser {
             if(operationString.contains(prioritizingOperation)){
                 //Gets the numbers that are included on the prioritized operation
                 String prioritizingOperationSubstring = "";
-                //TODO - Solve Operation with Prioritizing in operation 0.85*2+1.19 the pririoritizing operation is 5*2 and that is wrong
-                //TODO - 1.19+2*0.85 looping
-                try {
-                    prioritizingOperationSubstring = operationString.substring(operationString.indexOf(operator) + 1, operationString.indexOf(prioritizingOperation) + 2);
-                } catch (Exception e) {
-                    prioritizingOperationSubstring = operationString.substring(operationString.indexOf(prioritizingOperation) - 1, operationString.indexOf(prioritizingOperation) + 2);
+                //TODO - Solve Operation with Prioritizing in operation 2*0.85+1
+                //TODO - 6*-14 bugs -> Fix 1.19*2*1.1*2 and 1+2*0.85+1
+                //Check if there is a decimal variable represented with "." inside of operationString
+                if(operationString.contains(".")){
+                    System.out.println("CONTAINS .");
+                    if(operationString.substring(operationString.indexOf(prioritizingOperation) + 1, operationString.length() - 1).contains(".") ||
+                            operationString.substring(operationString.indexOf(operator) + 1, operationString.length() - 1).contains(".")) {
+                        //Gets the decimal variable in the end of the operationString
+                        System.out.println("Fim");
+                        System.out.println(operationString.substring(operationString.indexOf(operator) + 1, operationString.length() - 1));
+                        prioritizingOperationSubstring = operationString.substring(operationString.indexOf(operator) + 1, operationString.length() - 0);
+                    }
+                    else if(operationString.substring(0, operationString.indexOf(prioritizingOperation) + 2).contains(".")) {
+                        System.out.println("Inicio");
+                        //Gets the decimal variable in the beginning of the operationString
+                        prioritizingOperationSubstring = operationString.substring(0, operationString.indexOf(prioritizingOperation) + 2);
+                    }
+                    //Gets the decimal variable fully inside of the operationString
+                    //break;
+                }else {
+                    try {
+                        prioritizingOperationSubstring = operationString.substring(operationString.indexOf(operator) + 1, operationString.indexOf(prioritizingOperation) + 2);
+                    } catch (Exception e) {
+                        prioritizingOperationSubstring = operationString.substring(operationString.indexOf(prioritizingOperation) - 1, operationString.indexOf(prioritizingOperation) + 2);
+                    }
                 }
                 System.out.println("Prioritizing Operation = " + prioritizingOperationSubstring);
                 //Makes the prioritizing operation
                 double prioritizeOperation = chooseOperation(prioritizingOperationSubstring, prioritizingOperationSubstring.length() + 1);
                 operationString = operationString.replace(prioritizingOperationSubstring, prioritizeOperation + "");
                 System.out.println("Operation String Modified = " + operationString);
-                //For this not giving error in operations like 1+2*3/2, it has to be aplied an if
+                //For this not giving error in operations like 1+2*3/2, it has to be applied an if
                 //Adding 0 does not change the result of the operation, but it dosen't crash the program in the states ahead
                 if(operationString.contains(prioritizingOperation)){
                     operationString = solvePrioritizingOperations(operationString);
