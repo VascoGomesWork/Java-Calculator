@@ -119,21 +119,22 @@ public class OperationChooser {
                 //Gets the numbers that are included on the prioritized operation
                 String prioritizingOperationSubstring = "";
                 //TODO - Solve Operation with Prioritizing in operation 2*0.85+1
-                //TODO - 6*-14 bugs -> Fix 1.19*2*1.1*2 and 1+2*0.85+1
+                //TODO - 6*-14 bugs -> Fix 1.19*2*1.1*2 and 1+2*0.85*1
                 //Check if there is a decimal variable represented with "." inside of operationString
-                if(operationString.contains(".")){
+                if(operationString.contains(".") && operationString.contains(prioritizingOperation)){
                     System.out.println("CONTAINS .");
-                    if(operationString.substring(operationString.indexOf(prioritizingOperation) + 1, operationString.length() - 1).contains(".") ||
-                            operationString.substring(operationString.indexOf(operator) + 1, operationString.length() - 1).contains(".")) {
+                    System.out.println("Operation Substring 1 = " + operationString.substring(0, operationString.indexOf(operator)));
+                    System.out.println("Operation Substring 3 = " + operationString.substring(operationString.indexOf(operator) + 1, operationString.length()));
+
+                    if(operationString.substring(operationString.indexOf(operator) + 1, operationString.length()).contains(".")){
                         //Gets the decimal variable in the end of the operationString
                         System.out.println("Fim");
-                        System.out.println(operationString.substring(operationString.indexOf(operator) + 1, operationString.length() - 1));
-                        prioritizingOperationSubstring = operationString.substring(operationString.indexOf(operator) + 1, operationString.length() - 0);
+                        prioritizingOperationSubstring = operationString.substring(operationString.indexOf(operator) + 1, operationString.length());
                     }
-                    else if(operationString.substring(0, operationString.indexOf(prioritizingOperation) + 2).contains(".")) {
+                    else if(operationString.substring(0, operationString.indexOf(operator)).contains(".")) {
                         System.out.println("Inicio");
                         //Gets the decimal variable in the beginning of the operationString
-                        prioritizingOperationSubstring = operationString.substring(0, operationString.indexOf(prioritizingOperation) + 2);
+                        prioritizingOperationSubstring = operationString.substring(0, operationString.indexOf(operator));
                     }
                     //Gets the decimal variable fully inside of the operationString
                     //break;
