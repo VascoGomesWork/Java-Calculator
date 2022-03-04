@@ -37,8 +37,20 @@ public class MainActivity extends AppCompatActivity{
                 @Override
                 public void onClick(View v) {
 
+                    //Checks if button delete was pressed
+                    //TODO Mkae delete button work
+                    if(buttons.get(finalI).getText().equals("")) {
+
+                        System.out.println("Delete button pressed");
+                        if(!operationString.isEmpty()) {
+                            operationString = operationString.substring(0, operationString.length() - 1);
+                            System.out.println(operationString);
+                            visor.setText(operationString);
+                        }
+                    }
+
                     //Verifies if the content of the button is Clear, with if it is true goes to else
-                    if (!buttons.get(finalI).getText().equals("C")) {
+                    if (!buttons.get(finalI).getText().equals("AC")) {
 
                         //Makes a String with the operation to be made
                         operationString += buttons.get(finalI).getText();
@@ -102,9 +114,17 @@ public class MainActivity extends AppCompatActivity{
         buttons.add(findViewById(R.id.cubicRoot));
         buttons.add(findViewById(R.id.equals));
         buttons.add(findViewById(R.id.clear));
+        buttons.add(findViewById(R.id.btn15));
     }
 
     public void squareRootOnClick(View view) {
         System.out.println("Square Root");
+    }
+
+    public void removeCharBtn(TextView visor){
+        //Checks if the operationString is not empty
+
+            System.out.println("Delete");
+            System.out.println(operationString.substring(0, operationString.length() - 1));
     }
 }
