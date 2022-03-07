@@ -36,47 +36,60 @@ public class MainActivity extends AppCompatActivity{
             buttons.get(i).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
-                    //Checks if button delete was pressed
-                    //TODO Mkae delete button work
-                    if(buttons.get(finalI).getText().equals("")) {
-
-                        System.out.println("Delete button pressed");
-                        if(!operationString.isEmpty()) {
-                            operationString = operationString.substring(0, operationString.length() - 1);
-                            System.out.println(operationString);
-                            visor.setText(operationString);
-                        }
-                    }
-
+                    System.out.println("J -> " + j);
                     //Verifies if the content of the button is Clear, with if it is true goes to else
                     if (!buttons.get(finalI).getText().equals("AC")) {
+                        //Checks if button delete was pressed
+                        if (buttons.get(finalI).getText().equals("")) {
 
-                        //Makes a String with the operation to be made
-                        operationString += buttons.get(finalI).getText();
-                        j++;
-
-                        //If the key pressed is "=", returns the result of the operation
-                        if(buttons.get(finalI).getText().equals("=")){
-
-                            //Get From Operation Chooser Class the result of the Operation through Polymorphism
-                            //Checks if all numbers are Integer
-                            String resultOperation = operationChooser.chooseOperation(operationString, j) + "";
-                            if(operationChooser.checkFinalResultIsInteger(resultOperation)) {
-                                //Converts the Result to Integer
-                                visorText += "=" + Math.round(Double.parseDouble(resultOperation));
+                            System.out.println("Delete button pressed");
+                            if (!operationString.isEmpty()) {
+                                operationString = operationString.substring(0, operationString.length() - 1);
+                                //Decrements J variable
+                                j--;
+                                System.out.println(operationString);
+                                visorText = operationString;
+                                //Updates Visor Text
+                                visor.setText(visorText);
+                            } else {
+                                visorText = new String();
+                                visor.setText("");
+                                operationString = "";
+                                j = 0;
                             }
-                            else{
-                                //The Result Stays as a Double
-                                visorText += "=" + resultOperation;
+                        } else {
+                            //Makes a String with the operation to be made
+                            operationString += buttons.get(finalI).getText();
+                            j++;
+
+                            //If the key pressed is "=", returns the result of the operation
+                            if (buttons.get(finalI).getText().equals("=")) {
+                                //Checks if the user is trying to divide by 0
+                                if (!operationString.contains("/0")) {
+                                    //Get From Operation Chooser Class the result of the Operation through Polymorphism
+                                    //Checks if all numbers are Integer
+                                    System.out.println("OPERATION STRING = " + operationString);
+                                    String resultOperation = operationChooser.chooseOperation(operationString, j) + "";
+                                    if (operationChooser.checkFinalResultIsInteger(resultOperation)) {
+                                        //Converts the Result to Integer
+                                        visorText += "=" + Math.round(Double.parseDouble(resultOperation));
+                                    } else {
+                                        //The Result Stays as a Double
+                                        visorText += "=" + resultOperation;
+                                    }
+                                } else {
+                                    visorText = operationString + "NaN";
+                                    visor.setText(visorText);
+                                    operationString = "";
+                                    j = 0;
+                                }
+                            } else {
+                                visorText += buttons.get(finalI).getText();
+                                String text = "Button Pressed -> " + buttons.get(finalI).getText();
+                                System.out.println(text);
                             }
-                        }
-                        else {
-                            visorText += buttons.get(finalI).getText();
-                            String text = "Button Pressed = " + buttons.get(finalI).getText();
-                            System.out.println(text);
-                        }
                             visor.setText(visorText);
+                        }
                     }
                     else {
                         //Erases the content that was in the String visorText, sets the text in the visor to "",
@@ -89,7 +102,6 @@ public class MainActivity extends AppCompatActivity{
                 }
             });
         }
-
     }
 
     //TODO - Insert Linear Layout
@@ -115,16 +127,5 @@ public class MainActivity extends AppCompatActivity{
         buttons.add(findViewById(R.id.equals));
         buttons.add(findViewById(R.id.clear));
         buttons.add(findViewById(R.id.btn15));
-    }
-
-    public void squareRootOnClick(View view) {
-        System.out.println("Square Root");
-    }
-
-    public void removeCharBtn(TextView visor){
-        //Checks if the operationString is not empty
-
-            System.out.println("Delete");
-            System.out.println(operationString.substring(0, operationString.length() - 1));
     }
 }
